@@ -27,9 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://f13e-2409-40c1-411a-3b18-8f8-45dd-7c14-7bde.ngrok-free.app',
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://f13e-2409-40c1-411a-3b18-8f8-45dd-7c14-7bde.ngrok-free.app',
+# ]
 
 # Application definition
 
@@ -142,8 +142,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATIC_ROOT = os.path.join(BASE_DIR, 'main/static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'main/static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'main/static')]
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
