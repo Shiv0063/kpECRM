@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-1 mb-lg-0">
+                <h3 class="mb-2">Add Labour</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">Labour</li>
+                        <li class="breadcrumb-item active">Add Labour</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a href="/Labour" class="btn btn-outline-success mb-2 me-2">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row justify-content-start">
+            <div class="col-md-9 col-12 mb-1">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Add Labour</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3" method="post">
+                            {% csrf_token %}
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>Name</b></label>
+                                <input type="text" class="form-control" name="Name" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>Address</b></label>
+                                <textarea class="form-control" id="" rows="2" name="Address"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>Mobile No. 1</b></label>
+                                <input type="text" class="form-control" maxlength="10" name="MobileNo1" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>Mobile No. 2</b></label>
+                                <input type="text" class="form-control" maxlength="10" name="MobileNo2">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>Remarks</b></label>
+                                <textarea class="form-control" id="" rows="2" name="Remarks"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="col-5 btn btn-success m-1">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+{% endblock content %}

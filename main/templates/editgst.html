@@ -1,0 +1,128 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-4 mb-lg-0">
+                <h3 class="mb-2">Edit GST</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">GST</li>
+                        <li class="breadcrumb-item active">Edit GST</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a href="/GST" class="btn btn-outline-success mb-2 me-2">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row justify-content-start">
+            <div class="col-md-9 col-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Edit GST</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3" method="post">
+                            {% csrf_token %}
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>GST Name</b></label>
+                                <input type="text" class="form-control" name="GSTName" value="{{data.GSTName}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>SGST</b></label>
+                                <input type="number" class="form-control" name="SGST" value="{{data.SGST}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>CGST</b></label>
+                                <input type="number" class="form-control" name="CGST" value="{{data.CGST}}">
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="col-5 btn btn-success m-1">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+<!--//Page content//-->
+<div class="content p-4 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12 col-md-6 mb-4">
+                <div class=" overflow-hidden">
+                    <div class="card-body">
+                        <div class="modal fade" id="examplescrolling" tabindex="-1"
+                            aria-labelledby="examplescrollingLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="examplescrollingLabel">Add New Cluster</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" class="p-3" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="row mb-4 mt-2">
+                                            <label class="col-md-4 text-md-end" for="BlogDate">GST Name :</label>
+                                            <div class="col-md-8 col-lg-6">
+                                                <div>
+                                                    <input type="text" class="form-control" name="seller_name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <label class="col-md-4 text-md-end" for="BlogImage">S-GST :</label>
+                                            <div class="col-md-8 col-lg-6">
+                                                <input type="number" class="form-control" name="S-GST">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <label class="col-md-4 text-md-end" for="BlogImage">I-GST :</label>
+                                            <div class="col-md-8 col-lg-6">
+                                                <input type="number" class="form-control" name="S-GST">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//Page content End//-->
+
+{% endblock content %}

@@ -1,0 +1,99 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-4 mb-lg-0">
+                <h3 class="mb-2">Complete Call</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Complete Call</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center><h3 class="text-success">{{message}}</h3></center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" id=''>
+                    <div class="table-responsive p-2">
+                        <table id="exampletab" class="table mt-0 table-striped table-card table-nowrap">
+                            <thead class="text-uppercase small text-muted">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Party Name</th>
+                                    <th>Location Code</th>
+                                    <th>City</th>
+                                    <th>Branch</th>
+                                    <th>Call Type</th>
+                                    <th>Call No</th>
+                                    <th>Call Date</th>
+                                    <th>Call Close Date</th>
+                                    <th>Cluster</th>
+                                    <th>Challan No</th>
+                                    <th>Challan Date</th>
+                                    <th>Call Allocated</th>
+                                    <th>Contact Person</th>
+                                    <th>Contact No</th>
+                                    <th>Email Id</th>
+                                    <th>Problem</th>
+                                    <th>Remarks</th>
+                                    <th>Total Amount</th>
+                                    <th>Work Engaged</th>
+                                    <th>Cost Code</th>
+                                    <th>Cost Code Name</th>
+                                    <th>Estimate Recd.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in data %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.PartyName}}</td>
+                                    <td>{{i.Code}}</td>
+                                    <td>{{i.City}}</td>
+                                    <td>{{i.Branch}}</td>
+                                    <td>{{i.CallType}}</td>
+                                    <td>{{i.CodeNo}}</td>
+                                    <td>{{i.NDate}}</td>
+                                    <td>{{i.NCloseDate}}</td>
+                                    <td>{{i.Cluster}}</td>
+                                    <td>{{i.ChallanNo}}</td>
+                                    <td>{{i.NChallanDate}}</td>
+                                    <td>{{i.CallAllocatedTo}}</td>
+                                    <td>{{i.ContactPerson}}</td>
+                                    <td>{{i.ContactNo}}</td>
+                                    <td>{{i.Email}}</td>
+                                    <td>{{i.Problem}}</td>
+                                    <td>{{i.Remark}}</td>
+                                    <td>{{i.TotalAmount}}</td>
+                                    <td>{{i.WorkEngaged}}</td>
+                                    <td>{{i.CostCode}}</td>
+                                    <td>{{i.CCName}}</td>
+                                    <td>{{i.EstimateRecd}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+{% endblock content %}

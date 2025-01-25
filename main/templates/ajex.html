@@ -1,0 +1,86 @@
+<script>
+    // insart data
+    $(document).on('submit', '#post-form', function (e) {
+        e.preventDefault();
+        output = '';
+        $.ajax({
+            type: "POST",
+            url: '/RCCreat',
+            data: {
+                sid: $('#sid').val(),
+                Counter: $('#Counter').val(),
+                RCCode: $('#RCCode').val(),
+                RCDescription: $('#RCDescription').val(),
+                Quantity: $('#Quantity').val(),
+                Rate: $('#Rate').val(),
+                Labour: $('#Labour').val(),
+                Amount: $('#Amount').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (data) {
+                x = data.show
+                for (i = 0; i < x.length; i++) {
+                    output += "<tr><td>" + x[i].RCCode + "</td><td>" + x[i].Quantity + "</td><td>" + x[i].Rate + "</td><td>" + x[i].Labour + "</td><td>" + x[i].Amount  + "</td><td>" + x[i].RCDescription +"</td><td><a type='button' class='btn btn-success btn-edit btn-sm ms-2' data-sid="+x[i].id+"><i class='bi bi-pen fs-5'></i></a><a type='button' class='btn btn-danger btn-del btn-sm ms-2' data-sid="+x[i].id+"><i class='bi bi-trash fs-5'></i></a></td></tr>";
+                };
+                $('#tbody').html(output);
+                $('#sid').val('');
+                $('#post-form')[0].reset();
+                var $TotalAmount = $('#TotalAmount');
+                $TotalAmount.val(data.TAmount);
+                var tamount= document.getElementById("tamount");
+                tamount.innerText = data.TAmount;
+                var tamount2= document.getElementById("tamount2");
+                tamount2.innerText = data.TAmount; 
+            },
+        })
+
+    })
+    // delete data
+    $("tbody").on('click','.btn-del',function(){
+        // console.log('delete btn clicked');
+        let id = $(this).attr('data-sid');
+        let csr = $('input[name=csrfmiddlewaretoken]').val();
+        // console.log(id);
+        mydata={sid:id,csrfmiddlewaretoken:csr};
+        mythis=this;
+        $.ajax({
+            type: "POST",
+            url: '/RCDelete',
+            data: mydata,
+            success: function(data){
+                if(data.status==1){
+                    $(mythis).closest("tr").fadeOut();
+                }
+                var $TotalAmount = $('#TotalAmount');
+                $TotalAmount.val(data.TAmount);
+                var tamount= document.getElementById("tamount");
+                tamount.innerText = data.TAmount; 
+                var tamount2= document.getElementById("tamount2");
+                tamount2.innerText = data.TAmount; 
+            }
+        });
+    });
+     // edit data
+     $("tbody").on('click','.btn-edit',function(){
+        // console.log('edit btn clicked');
+        let id = $(this).attr('data-sid');
+        let csr = $('input[name=csrfmiddlewaretoken]').val();
+        // console.log(id);
+        mydata={sid:id,csrfmiddlewaretoken:csr};
+        $.ajax({
+            type: "POST",
+            url: '/RCEdit',
+            data: mydata,
+            success: function(data){
+                $("#sid").val(data.id);
+                $("#Counter").val(data.Counter);
+                $("#RCCode").val(data.RCCode);
+                $("#RCDescription").val(data.RCDescription);
+                $("#Quantity").val(data.Quantity);
+                $("#Rate").val(data.Rate);
+                $("#Labour").val(data.Labour);
+                $("#Amount").val(data.Amount);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,279 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}">
+    
+    <style>
+        #Ned12>.col-6 {
+            margin: 0px;
+            padding: 3px;
+            height: 29px;
+            color: black;
+            border: #000 1px solid !important;
+        }
+        #Ned12>.col-2 {
+            margin: 0px;
+            padding: 3px;
+            height: 29px;
+            color: black;
+            border: #000 1px solid !important;
+
+        }
+        #Ned12>.col-4 {
+            margin: 0px;
+            padding: 3px;
+            height: 29px;
+            color: black;
+            border: #000 1px solid !important;
+
+        }
+        tr {
+            border-right: 1px solid black !important;
+            border-left: 1px solid black !important;
+        }
+
+        th {
+            border: 1px solid black !important;
+        }
+        tbody>tr>td {
+            border: 1px solid black !important;
+        }
+
+        tfoot>tr>td {
+            border: 1px solid black !important;
+        }
+        #pageFooter {
+            display: table-footer-group; 
+        }
+
+        #pageFooter:after {
+            counter-increment: page;
+            content: counter(page); 
+        }
+        @media print {
+
+            #btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container-fluid p-0 m-0">
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <div class="text-black mt-2 w-100">
+                    <div class="row">
+                        <div class="col-12 text-center p-0 m-0" style="border: 1px solid #000 !important;">
+                            <h1 class="text-center m-0 p-0" style="font-size: 35px; color: red !important;" >Giri Associates</h1>
+                            <p class="p-0 m-0" style="font-size: 18px;">Furniture & All Type of Maintenance Work</p>
+                            <!-- <img src="{% static 'assets/bill/invoicehader1.png' %}" class="w-100" alt=""> -->
+                        </div>
+                        <div class="col-12 text-center p-0 m-0" style="border: 1px solid #000 !important;">
+                            <h2 style="font-size: 21px;"><b>Office Address:</b></h2>
+                            <p style="font-size: 18px; margin-bottom: -2px !important;margin-top: -10px !important;">Block No. 34, Rajeshwari Society, Jetpur - 360 370. Mobile: +91 7069202026, Email: giriassociates31569@gmail.com</p>
+                            <!-- <img src="{% static 'assets/bill/invoicehader.png' %}" class="w-100" alt=""> -->
+                        </div>
+                        <div class="col-12 text-center h2 mt-0 mb-0" style="border: 1px solid #000 !important;">
+                            TAX INVOICE
+                        </div>
+                        <div class="col-12 border border-black text-black">
+                            <div class="row" id="Ned12">
+                                <div class="col-6 p-0 m-0">{{py.PartyName}}</div>
+                                <div class="col-2 p-0 m-0">Invoice No.:</div>
+                                <div class="col-4 p-0 m-0">{{InvoiceNo}}</div>
+                                <div class="col-6 p-0 m-0">{{py.Address}}</div>
+                                <div class="col-2 p-0 m-0">Invoice Date :</div>
+                                <div class="col-4 p-0 m-0">{{dt.ndate}}</div>
+                                <div class="col-6 p-0 m-0"></div>
+                                <div class="col-2 p-0 m-0">Supplier Ref.:</div>
+                                <div class="col-4 p-0 m-0"></div>
+                                <div class="col-6 p-0 m-0">GUJARAT(24)</div>
+                                <div class="col-2 p-0 m-0">GSTIN :</div>
+                                <div class="col-4 p-0 m-0">{{pd.GSTNo}}</div>
+                                <div class="col-6 p-0 m-0">GST IN : {{py.GSTNo}}</div>
+                                <div class="col-2 p-0 m-0">PAN NO :</div>
+                                <div class="col-4 p-0 m-0">{{pd.PanNo}}</div>
+                                <div class="col-6 p-0 m-0">PAN : </div>
+                                <div class="col-2 p-0 m-0">VENDOR CODE :</div>
+                                <div class="col-4 p-0 m-0">278949</div>
+                            </div>
+                        </div>
+                        <table class="col-12 border border-black text-black">
+                            <thead>
+                                <tr>
+                                    <th >Sr.</th>
+                                    <th >Description</th>
+                                    <th >RC Code</th>
+                                    <th >HSN/ <br> SAC</th>
+                                    <th >Loc. <br>Code</th>
+                                    <th >UOM</th>
+                                    <th >Qty</th>
+                                    <th >Rate</th>
+                                    <th >Total</th>
+                                    {% if dt.Tax == 'GST' %}
+                                    <th >SGST <br>Rate</th>
+                                    <th >SGST <br>Amount</th>
+                                    <th >CGST <br>Rate</th>
+                                    <th >CGST <br>Amount</th>
+                                    {% else %}
+                                    <th >IGST <br>Rate</th>
+                                    <th >IGST <br>Amount</th>
+                                    {% endif %}
+                                    <th >Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in Rc %}
+                                <tr>
+                                    <td >{{forloop.counter}}</td>
+                                    <td >{{i.RCDescription}}</td>
+                                    <td >{{i.RCCode}}</td>
+                                    <td >{{i.HSNCode}}</td>
+                                    <td >{{py.Code}}</td>
+                                    <td >{{i.Unit}}</td>
+                                    <td >{{i.Quantity}}</td>
+                                    <td >{{i.Rate}}</td>
+                                    <td class=" text-end">{{i.Amount}}</td>
+                                    {% if dt.Tax == 'GST' %}
+                                    <td >{{i.GSTRate}} %</td>
+                                    <td class=" text-end">{{i.GSTAmount}}</td>
+                                    <td >{{i.GSTRate}} %</td>
+                                    <td class=" text-end">{{i.GSTAmount}}</td>
+                                    {% else %}
+                                    <td >{{i.GSTRate}} %</td>
+                                    <td class=" text-end">{{i.GSTAmount}}</td>
+                                    {% endif %}
+                                    <td class=" text-end">{{i.TotalAmount}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="text-end "><b>Sub Total:</b></td>
+                                    <td class=" text-end">{{Amount}}</td>
+                                    {% if dt.Tax == 'GST' %}
+                                    <td ></td>
+                                    <td class=" text-end">{{GSTAmount}}</td>
+                                    <td ></td>
+                                    <td class=" text-end">{{GSTAmount}}</td>
+                                    {% else %}
+                                    <td ></td>
+                                    <td class=" text-end">{{GSTAmount}}</td>
+                                    {% endif %}
+
+                                    <td class=" text-end">{{TotalAmount}}</td>
+                                </tr>
+                            </tfoot>
+                            <table style="border-bottom: 1px #000 solid !important;">
+                                <thead>
+                                    <tr>
+                                        <td class="w-50">
+                                            <b>Invoice No :  ( {{InvoiceNo}} )</b><br>
+                                            <b>Total Invoice Value (In figure) - {{TotalAmount}}</b><br>
+                                            <b>Total Invoice Value (In Words) - <br><b id="wrod" style="text-transform: capitalize"></b></b>
+                                        </td>
+                                        <td class="w-50 text-end" style="border-left: 1px #000 solid !important;">
+                                            <p style="margin-bottom: 0px;">Data Regions within table/matrix cells are ignored.</p>                                            
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: #000 1px solid;">
+                                        <td class="w-50">
+                                            <p style="margin-bottom: 0px;">Giri Associates <br>Bank Name: HDFC Bank Ltd. <br>A/C No: 50200025382500 <br>IFSC Code: HDFC0000565</p>
+                                        </td>
+                                        <td class="w-50 text-end" style="border-left: 1px #000 solid !important;">
+                                            <p style="margin-bottom: 0px;">For, Giri Associates <br><br><br> Authorised Signatory</p>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: #000 1px solid;">
+                                        <td colspan="2" class="text-center text-danger">
+                                            <p style="margin-bottom: 0px;">Registered Office: Block No. 34, Rejeshwary society Jetpur-360670. Cell: +91 7069202026.Email: <a href="Email:giriassociates31569@gmail.com">giriassociates31569@gmail.com</a></p>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3 mb-3" id="btn">
+            <a class="col-1 btn btn-success me-2" onclick="window.print()">Print</a>
+            <a class="col-1 btn btn-danger me-3" onclick="window.history.go(-1);">
+                Cancel
+            </a>
+        </div>
+    </div>
+</body>
+<script>
+    num = 0;
+    function Print() {
+        if (num == 0) {
+            window.print();
+        }
+        num = 1;
+    }
+    setInterval(Print, 500);
+    function convertToIndianWords(amount) {
+        const units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+        const teens = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+        const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+        const scales = ['', 'thousand', 'lakh', 'crore'];
+
+        function convertToWordsLessThanThousand(n) {
+            if (n < 10) {
+                return units[n];
+            } else if (n < 20) {
+                return teens[n - 11];
+            } else if (n < 100) {
+                return tens[Math.floor(n / 10)] + (n % 10 !== 0 ? ' ' + units[n % 10] : '');
+            } else {
+                return units[Math.floor(n / 100)] + ' hundred' + (n % 100 !== 0 ? ' & ' + convertToWordsLessThanThousand(n % 100) : '');
+            }
+        }
+
+        function convertAmountToWords(amount) {
+            let wholePart = Math.floor(amount);
+            const decimalPart = Math.round((amount - wholePart) * 100); // considering up to two decimal places
+
+            const wholeWords = convertToWordsLessThanThousand(wholePart);
+            const decimalWords = decimalPart > 0 ? '& ' + convertToWordsLessThanThousand(decimalPart) + ' paise' : '';
+
+            if (wholeWords === 'zero') {
+                return 'zero rupees only';
+            }
+
+            const words = [];
+            let scaleIndex = 0;
+
+            while (wholePart > 0) {
+                const chunk = wholePart % 1000;
+                if (chunk !== 0) {
+                    words.unshift(convertToWordsLessThanThousand(chunk) + ' ' + scales[scaleIndex]);
+                }
+                wholePart = Math.floor(wholePart / 1000);
+                scaleIndex++;
+            }
+
+            return words.join(' ') + ' rupees ' + decimalWords + ' only';
+        }
+
+        return convertAmountToWords(amount);
+    }
+
+    // Example usage:
+    const amount = '{{TotalAmount}}';
+    const amountInWords = convertToIndianWords(amount);
+    var tamount2 = document.getElementById("wrod");
+      tamount2.innerText = amountInWords;
+
+</script>
+
+</html>

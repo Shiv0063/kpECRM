@@ -1,0 +1,217 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-1 mb-lg-0">
+                <h3 class="mb-2">Cluster Report</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">Cluster Report</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a class="btn btn-outline-success mb-2 me-2" onclick="window.history.go(-1);">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row justify-content-start">
+            <div class=" col-12 mb-1">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <form class="row g-3" id="formAdd" method="post">
+                            {% csrf_token %}
+                            <div class="col-md-4">
+                                <label for="" class="form-label"><b>Cluster</b></label>
+                                <select id="" class="form-select" name="ClusterName" required>
+                                    <option >--Select--</option>
+                                    {% for i in CM %}
+                                    {% if i.ATM == "True" %}
+                                    <option value="{{i.id}}" {% if i.id == ClusterID %} selected {% endif %}>{{i.Name}} -- ATM</option>
+                                    {% elif i.Branch == "True" %}
+                                    <option value="{{i.id}}"  {% if i.id == ClusterID %} selected {% endif %}>{{i.Name}} -- Branch</option>
+                                    {% else%}
+                                    <option value="{{i.id}}"  {% if i.id == ClusterID %} selected {% endif %}>{{i.Name}} -- Hub Location</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4 order-md-0 order-0">
+                                <div class="row justify-content-center">
+                                    <div class="form-check col-4 mt-4">
+                                        <input class="form-check-input" type="radio" onchange="AllRecord()" value="AllRecord"
+                                            id="flexCheckChecked2" name="datein"  {% if datein == None or datein == 'AllRecord' %} checked {% endif %}>
+                                        <label class="form-check-label">
+                                            All Record
+                                        </label>
+                                    </div>
+                                    <div class="form-check col-4 mt-4">
+                                        <input class="form-check-input" type="radio" onchange="Dated()"
+                                            value="Date" id="flexCheckChecked" name="datein" {% if datein == 'Date' %} checked {% endif %}>
+                                        <label class="form-check-label" for="">
+                                            Date
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 order-md-2 order-3">
+                                <div class="row justify-content-center">
+                                    <div class="form-check col-4 mt-4">
+                                        <input class="form-check-input" type="radio" value="Call"
+                                            id="flexCheckChecked2" name="Type" {% if Type == None or Type == 'Call' %} checked {% endif %}>
+                                        <label class="form-check-label">
+                                            Call
+                                        </label>
+                                    </div>
+                                    <div class="form-check col-4 mt-4 ">
+                                        <input class="form-check-input" type="radio"
+                                            value="WorkOrder" id="flexCheckChecked" name="Type" {% if Type == 'WorkOrder' %} checked {% endif %}>
+                                        <label class="form-check-label" for="">
+                                            WorkOrder
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 order-md-3 order-2" id="Date" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="singleDatePicker" class="form-label">From Date</label>
+                                        <input id="singleDatePicker" class="form-control" name="FromDate" type="date" value="{{FromDate}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="singleDatePicker" class="form-label">To Date</label>
+                                        <input id="singleDatePicker" class="form-control" name="ToDate" type="date" value="{{ToDate}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex align-items-end order-4">
+                                <button type="submit" formaction="/ClusterReport" class="btn btn-success ">Search</button>
+                                <button type="submit" formaction="/ClusterEL" class="btn btn-primary ms-2">Excel</button>
+                            </div>
+                            <div class="col-12 order-md-4 order-4">
+                                <div class="card" id=''>
+                                    <div class="table-responsive p-2">
+                                        <table id="" class="table mt-0 table-striped table-card table-nowrap">
+                                            <thead class="text-uppercase small text-muted">
+                                                <tr>
+                                                    <th>Call Date</th>
+                                                    <th>Call Close Date</th>
+                                                    <th>Cluster</th>
+                                                    <th>Challan No</th>
+                                                    <th>Challan Date</th>
+                                                    <th>Call Allocated</th>
+                                                    <th>Contact Person</th>
+                                                    <th>Contact No</th>
+                                                    <th>Email Id</th>
+                                                    <th>Problem</th>
+                                                    <th>Remarks</th>
+                                                    <th>Work Engaged</th>
+                                                    <th>Cost Code</th>
+                                                    <th>Cost Code Name</th>
+                                                    <th>Code No</th>
+                                                    <th>Estimate Recd.</th>
+                                                    <th>Total Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody">
+                                                {% for i in show %}
+                                                <tr>
+                                                    <td>{{i.NDate}}</td>
+                                                    <td>{{i.NCloseDate}}</td>
+                                                    <td>{{i.Cluster}}</td>
+                                                    <td>{{i.ChallanNo}}</td>
+                                                    <td>{{i.NChallanDate}}</td>
+                                                    <td>{{i.CallAllocatedTo}}</td>
+                                                    <td>{{i.ContactPerson}}</td>
+                                                    <td>{{i.ContactNo}}</td>
+                                                    <td>{{i.Email}}</td>
+                                                    <td>{{i.Problem}}</td>
+                                                    <td>{{i.Remark}}</td>
+                                                    <td>{{i.WorkEngaged}}</td>
+                                                    <td>{{i.CostCode}}</td>
+                                                    <td>{{i.CCName}}</td>
+                                                    <td>{{i.CodeNo}}</td>
+                                                    <td>{{i.EstimateRecd}}</td>
+                                                    <td>{{i.TotalAmount}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+{% endblock content %}
+
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    DF = new Date()
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    document.getElementById("BillYear").value = DF.getFullYear();
+    document.getElementById("BillMonth").value = monthNames[DF.getMonth()];
+    document.getElementById("InvoiceData").value = DF.toJSON().slice(0, 10);
+    y = DF.getFullYear();
+    y = y-2000+1
+    document.getElementById("InvoiceNo").value = '{{InvoiceNo}}';
+    // document.getElementById("InvoiceNo").value = 'GA'+DF.getFullYear()+''+y +'{{InvoiceNo}}';
+
+
+    function Dated() {
+        let get = document.getElementById('Date');
+        get.style.display = "block ";
+    }
+    function AllRecord() {
+        let get = document.getElementById('Date');
+        get.style.display = "none";
+    }
+    val = 'Date';
+    if (val == '{{datein}}'){
+        let get = document.getElementById('Date');
+        get.style.display = "block ";
+    }
+
+    var $InvoiceData = $('#InvoiceData');
+
+    function calcVal() {
+        dt = $InvoiceData.val();
+        DF = new Date(dt);
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    document.getElementById("BillMonth").value = monthNames[DF.getMonth()];
+    }
+
+    $InvoiceData.on("change", function () {calcVal();});
+</script>
+{% endblock script %}

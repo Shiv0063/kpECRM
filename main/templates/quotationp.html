@@ -1,0 +1,337 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}">
+    
+    <style>
+        #Ned12>.col-6{
+            margin: 0px;
+            padding: 3px;
+            color: black;
+            border: #000 1px solid !important;
+        }
+        #Ned12>.col-2,.col-1,.col-3 {
+            margin: 0px;
+            padding: 3px;
+            color: black;
+            border: #000 1px solid !important;
+
+        }
+        #Ned12>.col-4,.col-5 {
+            margin: 0px;
+            padding: 3px;
+            color: black;
+            border: #000 1px solid !important;
+
+        }
+        .ddt{
+            height: 220px;
+        }
+        tr {
+            border-right: 1px solid black !important;
+            border-left: 1px solid black !important;
+        }
+
+        th {
+            border: 1px solid black !important;
+        }
+        tbody>tr>td {
+            border: 1px solid black !important;
+        }
+
+        tfoot>tr>td {
+            border: 1px solid black !important;
+        }
+
+        @media print {
+
+            #btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-11">
+                <div class="text-black mt-2 w-100">
+                    <div class="row ">
+                        <div class="col-12 text-center h2 mt-0 mb-0" style="border: 2px solid #000 !important;">
+                            <u><b>‌Quotation</b></u>
+                        </div>
+                        <div class="col-12 border border-black text-black">
+                            <div class="row" id="Ned12">
+                                <div class="col-2"><p><b>Name of company / Agency</b></p></div>
+                                <div class="col-4"><b>GIRI ASSOCIATES</b></div>
+                                <div class="col-2"><b>Quotation Date :</b></div>
+                                <div class="col-4">{{dt.ndate}}</div>
+                                <div class="col-2"><b>Registered Address :</b></div>
+                                <div class="col-4">Rajeshwari Society, Junagadh Road, Jetpur-360370</div>
+                                <div class="col-2"><b>Quotation No :</b></div>
+                                <div class="col-4">{{QuotationidNo}}</div>
+                                <div class="col-2"><b>Email ID :-</b></div>
+                                <div class="col-2"><a href="" style="text-wrap:wrap; word-break: break-all;">giriassociates31569@gmail.com</a></div>
+                                <div class="col-2"><b>Mobile No : 7069202026</b></div>
+                                <div class="col-3"><b>Branch Representative Name :</b></div>
+                                <div class="col-3">{{dt.BRName}}</div>
+                                <div class="col-1"><b>State</b></div>
+                                <div class="col-1"></div>
+                                <div class="col-2">GUJRAT</div>
+                                <div class="col-2"><b>vendor Code : 278949</b></div>
+                                <div class="col-3"><b>Email ID</b> :- {{dt.EmailID}}</div>
+                                <div class="col-3"><b>MOBILE NO.</b> - {{dt.MOBILENO}}</div>
+                                <div class="col-1">GSTN</div>
+                                <div class="col-1"></div>
+                                <div class="col-4">24BFEPA8987E1ZE</div>
+                                <div class="col-2"></div>
+                                <div class="col-4"></div>
+                                <div class="col-6 text-center"><b>Billing Address</b></div>
+                                <div class="col-6 text-center"><b>Ship to Party /Delivery address</b></div>
+                                <div class="col-1"><b>Name :</b></div>
+                                <div class="col-5">{{party.PartyName}}</div>
+                                <div class="col-2"><b>Location Code :</b></div>
+                                <div class="col-4">{{party.Code}}</div>
+                                <div class="col-1"><b>Add :</b></div>
+                                <div class="col-5">Administration Department,</div>
+                                <div class="col-2"><b>Location Name:</b></div>
+                                <div class="col-4">{{party.Branch}}</div>
+                                <div class="col-1"><b>State :</b></div>
+                                <div class="col-5">GUJRAT</div>
+                                <div class="col-2"><b>Location Type</b></div>
+                                <div class="col-4">Branch Banking</div>
+                                <div class="col-1"><b>GSTN :</b></div>
+                                <div class="col-5">{{party.GSTNo}}</div>
+                                <div class="col-2"><b>State :</b></div>
+                                <div class="col-4">GUJRAT</div>
+                                <div class="col-6"><b>COST CODE :- {{party.Code}} ,COST CODE NAME : -{{party.Branch}}</b></div>
+                                <div class="col-2"><b>GSTN :</b></div>
+                                <div class="col-4">{{party.GSTNo}}</div>
+                                <div class="col-1"><b>ASD No :-</b></div>
+                                <div class="col-5">{{dt.ASDNo}}</div>
+                                <div class="col-1"><b>ASD Date :-</b></div>
+                                <div class="col-5">{{dt.NASDDate}}</div>
+                                <div class="col-12" style="margin: 0px;padding: 3px;color: black;border: #000 1px solid !important;">SUB:</div>
+                            </div>
+                        </div>
+                        <table class="col-12 border border-black text-black">
+                            <thead>
+                                <tr>
+                                    <th class="p-1">Sr.</th>
+                                    <th class="p-1">Description</th>
+                                    <th class="p-1">RC Code</th>
+                                    <th class="p-1">HSN/ <br> SAC</th>
+                                    <th class="p-1">Loc. <br>Code</th>
+                                    <th class="p-1">UOM</th>
+                                    <th class="p-1">Qty</th>
+                                    <th class="p-1">Rate</th>
+                                    <th class="p-1">Total</th>
+                                    {% if dt.Type == 'GST' %}
+                                    <th class="p-1">SGST <br>Rate</th>
+                                    <th class="p-1">SGST <br>Amount</th>
+                                    <th class="p-1">CGST <br>Rate</th>
+                                    <th class="p-1">CGST <br>Amount</th>
+                                    {% else %}
+                                    <th class="p-1">IGST <br>Rate</th>
+                                    <th class="p-1">IGST <br>Amount</th>
+                                    {% endif %}
+                                    <th class="p-1">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in Rc %}
+                                {% if i.TYPES == 'RC' or i.TYPES != 'NonRC' %}
+                                <tr>
+                                    <td class="p-1">{{forloop.counter}}</td>
+                                    <td class="p-1">{{i.RCDescription}}</td>
+                                    <td class="p-1">{{i.RCCode}}</td>
+                                    <td class="p-1">{{i.HSNCode}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1">{{i.Unit}}</td>
+                                    <td class="p-1">{{i.Quantity}}</td>
+                                    <td class="p-1">{{i.Rate}}</td>
+                                    <td class="p-1">{{i.Amount}}</td>
+                                    {% if dt.Type == 'GST' %}
+                                    <td class="p-1">{{i.GSTRate}} %</td>
+                                    <td class="p-1 text-end">{{i.GSTAmount}}</td>
+                                    <td class="p-1">{{i.GSTRate}} %</td>
+                                    <td class="p-1 text-end">{{i.GSTAmount}}</td>
+                                    {% else %}
+                                    <td class="p-1">{{i.GSTRate}} %</td>
+                                    <td class="p-1 text-end">{{i.GSTAmount}}</td>
+                                    {% endif %}
+                                    <td class="p-1 text-end">{{i.TotalAmount}}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="8" class="text-end p-1"><b>Total RC Amount :-</b></td>
+                                    <td class="p-1">{{RCAmount}}</td>
+                                    {% if dt.Type == 'GST' %}
+                                    <td class="p-1"></td>
+                                    <td class="p-1 text-end">{{GRCAmount}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1 text-end">{{GRCAmount}}</td>
+                                    {% else %}
+                                    <td class="p-1"></td>
+                                    <td class="p-1 text-end">{{GRCAmount}}</td>
+                                    {% endif %}
+                                    <td class="p-1 text-end">{{RCGAmount}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="text-center">Non RC Items ( Maximum Rs 10000 or 20% of RC Items cost which ever is lower will be considered for Non Rc items )</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                {% for i in Rc %}
+                                {% if i.TYPES == 'NonRC' %}
+                                <tr>
+                                    <td class="p-1">{{forloop.counter}}</td>
+                                    <td class="p-1">{{i.RCDescription}}</td>
+                                    <td class="p-1">{{i.RCCode}}</td>
+                                    <td class="p-1">{{i.HSNCode}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1">{{i.Unit}}</td>
+                                    <td class="p-1">{{i.Quantity}}</td>
+                                    <td class="p-1">{{i.Rate}}</td>
+                                    <td class="p-1">{{i.Amount}}</td>
+                                    {% if dt.Type == 'GST' %}
+                                    <td class="p-1">{{i.GSTRate}} %</td>
+                                    <td class="p-1 text-end">{{i.GSTAmount}}</td>
+                                    <td class="p-1">{{i.GSTRate}} %</td>
+                                    <td class="p-1 text-end">{{i.GSTAmount}}</td>
+                                    {% else %}
+                                    <td class="p-1">{{i.GSTRate}} %</td>
+                                    <td class="p-1 text-end">{{i.GSTAmount}}</td>
+                                    {% endif %}
+                                    <td class="p-1 text-end">{{i.TotalAmount}}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="8" class="text-end p-1"><b>Total Non RC Amount :-</b></td>
+                                    <td class="p-1">{{NAmount}}</td>
+                                    {% if dt.Type == 'GST' %}
+                                    <td class="p-1"></td>
+                                    <td class="p-1 text-end">{{GNAmount}}</td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1 text-end">{{GNAmount}}</td>
+                                    {% else %}
+                                    <td class="p-1"></td>
+                                    <td class="p-1 text-end">{{GNAmount}}</td>
+                                    {% endif %}
+                                    <td class="p-1 text-end">{{NGAmount}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                
+                                <tr>
+                                    <td colspan="8" class="text-end p-1"><b>Total Amount ( RC + Non RC )</b></td>
+                                    <td class="p-1">{{Amount}}</td>
+                                    {% if dt.Type == 'GST' %}
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                    {% else %}
+                                    <td class="p-1"></td>
+                                    <td class="p-1"></td>
+                                    {% endif %}
+                                    <td class="p-1 text-end">{{GAmount}}</td>
+                                </tr>
+                            </tfoot>
+                            <table style="border-bottom: 1px #000 solid !important;">
+                                <thead>
+                                    <tr>
+                                        <td class="">
+                                            <br>
+                                            <br>
+                                            <b>Total Invoice Value (In figure) - {{GAmount}}</b><br>
+                                            <b>Total Invoice Value (In Words) - <b id="wrod" style="text-transform: capitalize"></b></b>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3 mb-3" id="btn">
+            <a class="col-1 btn btn-success me-2" style="border: #fff 1px solid !important; color: #fff;" onclick="window.print()">Print</a>
+            <a class="col-1 btn btn-danger me-3" style="border: #fff 1px solid !important; color: #fff;" onclick="window.history.go(-1);">
+                Cancel
+            </a>
+        </div>
+    </div>
+</body>
+<script>
+    num = 0;
+    function Print() {
+        if (num == 0) {
+            window.print();
+        }
+        num = 1;
+    }
+    setInterval(Print, 500);
+    function convertToIndianWords(amount) {
+        const units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+        const teens = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+        const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+        const scales = ['', 'thousand', 'lakh', 'crore'];
+
+        function convertToWordsLessThanThousand(n) {
+            if (n < 10) {
+                return units[n];
+            } else if (n < 20) {
+                return teens[n - 11];
+            } else if (n < 100) {
+                return tens[Math.floor(n / 10)] + (n % 10 !== 0 ? ' ' + units[n % 10] : '');
+            } else {
+                return units[Math.floor(n / 100)] + ' hundred' + (n % 100 !== 0 ? ' & ' + convertToWordsLessThanThousand(n % 100) : '');
+            }
+        }
+
+        function convertAmountToWords(amount) {
+            let wholePart = Math.floor(amount);
+            const decimalPart = Math.round((amount - wholePart) * 100); // considering up to two decimal places
+
+            const wholeWords = convertToWordsLessThanThousand(wholePart);
+            const decimalWords = decimalPart > 0 ? '& ' + convertToWordsLessThanThousand(decimalPart) + ' paise' : '';
+
+            if (wholeWords === 'zero') {
+                return 'zero rupees only';
+            }
+
+            const words = [];
+            let scaleIndex = 0;
+
+            while (wholePart > 0) {
+                const chunk = wholePart % 1000;
+                if (chunk !== 0) {
+                    words.unshift(convertToWordsLessThanThousand(chunk) + ' ' + scales[scaleIndex]);
+                }
+                wholePart = Math.floor(wholePart / 1000);
+                scaleIndex++;
+            }
+
+            return words.join(' ') + ' rupees ' + decimalWords + ' only';
+        }
+
+        return convertAmountToWords(amount);
+    }
+
+    // Example usage:
+    const amount = '{{GAmount}}';
+    const amountInWords = convertToIndianWords(amount);
+    var tamount2 = document.getElementById("wrod");
+      tamount2.innerText = amountInWords;
+
+</script>
+
+</html>

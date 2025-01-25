@@ -1,0 +1,586 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-4 mb-lg-0">
+                <h3 class="mb-2">Add Call Entry</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">Call Entry</li>
+                        <li class="breadcrumb-item active">Add Call Entry</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a href="/CallEntry" class="btn btn-outline-success mb-2 me-2">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Add Call Entry</h5>
+                        <p class="test-end">Financial Year : 2023-2024</p>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3" method="post" id="formAdd">
+                            {% csrf_token %}
+                            <div class="col-md-3">
+                                <label for="inputState" class="form-label">Party Name</label>
+                                <input type="hidden" name="Counter" value="{{CM.Counter}}">
+                                <select id="Party" name="PartyName" class="form-select" required>
+                                    <option selected>--Select--</option>
+                                    {% for i in PN %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputState" class="form-label">City</label>
+                                <select id="City" name="City" class="form-select" required>
+                                    <option class="after" value="">--Select--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputState" class="form-label">Branch</label>
+                                <select id="selectType" name="Branch" class="form-select" required>
+                                    <option class="after2" value="">--Select--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label">Location Code</label>
+                                <input type="text" name="Code" class="form-control" id="Code" required readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputAddress" class="form-label">Address</label>
+                                <textarea class="form-control" id="Address" name="Address" rows="3" readonly></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputCity" class="form-label">Cluster</label>
+                                <input type="text" name="Cluster" id="Cluster" class="form-control" readonly>
+                                <input type="hidden" name='Cluster_id' id="Cluster_id" >
+                            </div>
+                            <div class="col-md-5">
+                                <label for="inputCity" class="form-label">Nos.</label>
+                                <div class="row">
+                                    <div class="col-6 mb-1">
+                                        <input type="text" class="form-control" name="NO1">
+                                    </div>
+                                    <div class="col-6 mb-1">
+                                        <input type="text" class="form-control" name="NO2">
+                                    </div>
+                                    <div class="col-6 mb-1">
+                                        <input type="text" class="form-control" name="NO3">
+                                    </div>
+                                    <div class="col-6 mb-1">
+                                        <input type="text" class="form-control" name="NO4">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputEmail4" class="form-label">Call Type</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" onchange="Call()" value="Call"
+                                        id="flexCheckChecked2" name="CallType" checked>
+                                    <label class="form-check-label">
+                                        Call
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" onchange="WorkOrder()"
+                                        value="WorkOrder" id="flexCheckChecked" name="CallType">
+                                    <label class="form-check-label" for="">
+                                        WorkOrder
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label">Call No.</label>
+                                <input type="text" name="CodeNo" id="CN" class="form-control" id="" required>
+                            </div>
+                            <div class="col-md-3" id="CallDate" style="display: none;">
+                                <label for="CallDate" class="form-label">Call Date</label>
+                                <input class="form-control" name="CallDate" type="date">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="singleDatePicker" id="Call" class="form-label">Call Date</label>
+                                <label for="singleDatePicker" id="WorkOrder" style="display: none;"
+                                    class="form-label">WorkOrder Date</label>
+                                <input id="Date" class="form-control" name="Date" type="date" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="singleDatePicker" id="Call2" class="form-label">Call Close Date</label>
+                                <label for="singleDatePicker" id="WorkOrder2" style="display: none;"
+                                    class="form-label">WorkOrder Close Date</label>
+                                <input id="CloseDate" class="form-control" name="CloseDate" type="date"  required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputState" class="form-label">Cost Code</label>
+                                <select id="CostCode" class="form-select" name="CostCode" required>
+                                    <option selected>Choose...</option>
+                                    {% for i in CC %}
+                                    <option value="{{i.CostCode}}">{{i.CostCode}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputEmail4" class="form-label">CC Name</label>
+                                <input type="text" class="form-control" id="CCName" name="CCName" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputCity" class="form-label">Challan No.</label>
+                                <input type="text" class="form-control" name="ChallanNo" id="CNC" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="singleDatePicker" class="form-label">Challan /Work Start
+                                    Date</label>
+                                <input id="ChallanDate" class="form-control" name="ChallanDate" type="date"
+                                    required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label">Contact No</label>
+                                <input type="number" class="form-control" name="ContactNo" id="" >
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label">Contact Person Name</label>
+                                <input type="text" class="form-control" name="ContactPerson" id="">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputEmail4" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="inputEmail4" name="Email">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">Call Allocated To</label>
+                                <select id="inputState" class="form-select" name="CallAllocatedTo">
+                                    <option selected value="">Choose...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputCity" class="form-label">Estimate Recd.</label>
+                                <input type="number" class="form-control" name="EstimateRecd" id="inputCity">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">Work Engaged</label>
+                                <select id="WorkEngagedid" class="form-select" onchange="Others()" name="WorkEngaged">
+                                    <option selected value="">Choose...</option>
+                                    <option value="Carpenter">Carpenter</option>
+                                    <option value="Electrician">Electrician</option>
+                                    <option value="Plumber">Plumber</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12" id="OthersID" style="display: none;">
+                                <label for="inputCity" class="form-label">Work Engaged Other</label>
+                                <input type="text" class="form-control" name="Other" id="">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputAddress" class="form-label">Problem</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                    name="Problem"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputAddress" class="form-label">Remark</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" name="Remark"
+                                    rows="3"></textarea>
+                                <input type="hidden" name="TotalAmount" id="TotalAmount" value="{{TAmount}}">
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <p class="text-danger">Total Amount : <samp id="tamount">{{TAmount}}</samp>.00</p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="col-5 btn btn-success m-1">Save</button>
+                                    <a class="col-5 btn btn-warning m-1" href="/EntryClase">close</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="border border-1 rounded row p-2 m-0 mt-3 mb-2">
+                    <div class="col-md-12">
+                        <form class="row justify-content-center" method="post" id="post-form">
+                            {% csrf_token %}
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-12" id="RCcodeF">
+                                        <label for="" class="form-label">RC Code</label>
+                                        <select class="form-select" name="RCCode" id="RCCode" required>
+                                            <option selected>--Select--</option>
+                                            {% for i in RC %}
+                                            <option value="{{i.CodeNo}}">{{i.CodeNo}} -- {{i.Description}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="sid" id="sid">
+                                        <input type="hidden" id="Counter" value="{{CM.Counter}}">
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <label for="inputAddress" class="form-label">Description</label>
+                                        <textarea class="form-control" id="RCDescription" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 row justify-content-center mt-2">
+                                <div class="col-6 ">
+                                    <label for="inputCity" class="form-label">Quantity</label>
+                                    <input type="text" class="form-control" id="Quantity"  placeholder="0" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="inputCity" class="form-label">Rate</label>
+                                    <input type="text" class="form-control" id="Rate" placeholder="0" required>
+                                </div>
+                                <div class="col-6 mt-2">
+                                    <label for="inputCity" class="form-label">Labour</label>
+                                    <input type="text" class="form-control" id="Labour" value="0" placeholder="0">
+                                </div>
+                                <div class="col-6 mt-2">
+                                    <label for="inputCity" class="form-label">Amount</label>
+                                    <input type="text" class="form-control" id="Amount" placeholder="0" required>
+                                </div>
+                                <button type="submit" class="col-6 mt-2 btn btn-success">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card mt-4" id=''>
+                            <div class="table-responsive p-2">
+                                <table id="" class="table">
+                                    <thead class="text-uppercase small text-muted">
+                                        <tr>
+                                            <th>RC Code</th>
+                                            <th>Quantity</th>
+                                            <th>Rate</th>
+                                            <th>Labour</th>
+                                            <th>Amount</th>
+                                            <th>RC Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        {% for i in RCM %}
+                                        {% if i.Counter == CM.Counter %}
+                                        <tr>
+                                            <td>{{i.RCCode}}</td>
+                                            <td>{{i.Quantity}}</td>
+                                            <td>{{i.Rate}}</td>
+                                            <td>{{i.Labour}}</td>
+                                            <td>{{i.Amount}}</td>
+                                            <td>{{i.RCDescription}}</td>
+                                            <td>
+                                                <a type="button" class="btn btn-success btn-edit btn-sm ms-2"
+                                                    data-sid="{{i.id}}"><i class="bi bi-pen fs-5"></i></a>
+                                                <a type="button" class="btn btn-danger btn-del btn-sm ms-2"
+                                                    data-sid="{{i.id}}"><i class="bi bi-trash fs-5"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total Amount: </th>
+                                            <th><span id="tamount2">{{TAmount}}</span></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+
+{% endblock content %}
+
+{% block script %}
+{% include 'ajex.html' %}
+<script>
+    $("#formAdd select[name='CostCode']").on('change', function () {
+        var $this = $(this);
+        var $cname = $("#CCName");
+        if ($this.val() != '') {
+            $.ajax({
+                url: '/CCName',
+                type: 'POST',
+                data: { value: $this.val() },
+                success: function (i) {
+                    $cname.val(i.Name);
+                },
+                error: function (i) {
+                    console.log('Something went wrong');
+                }
+            });
+        }
+    });
+    $("#formAdd select[name='PartyName']").on('change', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            $("#formAdd select[name='City']").find('.after').nextAll().remove();
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+            $('#Code').val('');
+            $('#Cluster').val('');
+            $('#Address').val('');
+            $.ajax({
+                url: '/Citys',
+                type: 'POST',
+                data: { value: $this.val() },
+                success: function (resp) {
+                    let options = '';
+                    resp.City.forEach(City => {
+                        options += '<option value=' + City + '>' + City + '</option>';
+                    });
+                    $("#formAdd select[name='City']").find('.after').after(options);
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            $("#formAdd ").find('.after').nextAll().remove();
+        }
+    });
+    $("#formAdd input[name='CodeNo']").on('keydown keyup', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            $.ajax({
+                url: '/CodeNoC',
+                type: 'POST',
+                data: { CN: $this.val() },
+                success: function (resp) {
+                    let v = document.getElementById("CN");
+                    v.className = "";
+                    if (resp.RC == 1) {
+                        v.className = "form-control border border-2 border-danger";
+                    }
+                    else {
+                        v.className = "form-control border border-2 border-success";
+                    }
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        }
+    });
+    $("#formAdd input[name='ChallanNo']").on('keydown keyup', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            $.ajax({
+                url: '/ChallanNoC',
+                type: 'POST',
+                data: { CN: $this.val() },
+                success: function (resp) {
+                    let v = document.getElementById("CNC");
+                    v.className = "";
+                    if (resp.RC == 1) {
+                        v.className = "form-control border border-2 border-danger";
+                    }
+                    else {
+                        v.className = "form-control border border-2 border-success";
+                    }
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        }
+    });
+    $("#formAdd select[name='City']").on('change', function () {
+        var $this = $(this);
+        PN = $('#Party').val();
+        if ($this.val() != '') {
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+            $.ajax({
+                url: '/Branch',
+                type: 'POST',
+                data: { value: PN,City: $this.val() },
+                success: function (resp) {
+                    let options = '';
+                    resp.Branch.forEach(City => {
+                        City2 = City.replace(" ", "%20");
+                        City2 = City2.replace(" ", "%20");
+                        options += '<option value=' + City2 + '>' + City + '</option>';
+                    });
+                    $("#formAdd select[name='Branch']").find('.after2').after(options);
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+        }
+    });
+    $("#formAdd select[name='Branch']").on('change', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            var $Party = $('#Party');
+            var $City = $('#City');
+            $.ajax({
+                url: '/PartyData',
+                type: 'POST',
+                data: { Party: $Party.val(), City: $City.val(), Branch: $this.val() },
+                success: function (resp) {
+                    $('#Code').val(resp.RC);
+                    $('#Cluster').val(resp.CL+" -- "+resp.AL);
+                    $('#Address').val(resp.AD);
+                    $('#Cluster_id').val(resp.AID);
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+        }
+    });
+    var $WorkEngagedid = $('#WorkEngagedid');
+    function Others() {
+        var num1 = $WorkEngagedid.val();
+        if(num1 == "Others"){
+            let get = document.getElementById('OthersID');
+            get.style.display = "block";
+        }
+        else{
+            let get = document.getElementById('OthersID');
+            get.style.display = "none";
+        }
+        
+    }
+
+    function Call() {
+        let get = document.getElementById('WorkOrder');
+        get.style.display = "none";
+        let get2 = document.getElementById('Call');
+        get2.style.display = "block";
+        let get3 = document.getElementById('WorkOrder2');
+        get3.style.display = "none";
+        let get4 = document.getElementById('Call2');
+        get4.style.display = "block";
+        let CD = document.getElementById('CallDate');
+        CD.style.display = "none";
+    }
+    function WorkOrder() {
+        let get = document.getElementById('WorkOrder');
+        get.style.display = "block";
+        let get2 = document.getElementById('Call');
+        get2.style.display = "none";
+        let get3 = document.getElementById('WorkOrder2');
+        get3.style.display = "block";
+        let get4 = document.getElementById('Call2');
+        get4.style.display = "none";
+        let CD = document.getElementById('CallDate');
+        CD.style.display = "block";
+    }
+
+    var $Quantity = $('#Quantity');
+    var $Rate = $('#Rate');
+    var $Labour = $('#Labour');
+    var $Amount = $('#Amount');
+
+    function calcVal() {
+
+        var num1 = $Quantity.val();
+        var num2 = $Rate.val();
+        var num3 = $Labour.val();
+        if (num3 == '') {
+            num3 = 0;
+        }
+        if (num1 == '') {
+            num1 = 0;
+        }
+        var total_amount = Number(num1) * Number(num2) + Number(num3);
+        if (!isNaN(total_amount)) {
+            $Amount.val(total_amount.toFixed(2));
+        }
+    }
+    $Quantity.on("keydown keyup", function () {
+        calcVal();
+    });
+    $Rate.on("keydown keyup", function () {
+        calcVal();
+    });
+    $Labour.on("keydown keyup", function () {
+        calcVal();
+    });
+    $("#RCcodeF select[name='RCCode']").on('change', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            RC = $this.val();
+            mydata = { RC: RC };
+            $.ajax({
+                type: "POST",
+                url: '/RCCODE',
+                data: mydata,
+                success: function (resp) {
+                    RCV = $('#Rate');
+                    RCV.val(resp.RC);
+                    RCV2 = $('#RCDescription');
+                    RCV2.val(resp.RCDescription);
+
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            console.log('Something went wrong');
+        }
+    });
+
+    var $Date = $('#Date');
+
+    function datass(){
+        document.getElementById("CloseDate").setAttribute("min",$Date.val());
+        document.getElementById("ChallanDate").setAttribute("min",$Date.val());
+    }
+    $Date.on("change select", function () {
+        datass();
+        $("#CloseDate").val('');
+        $("#ChallanDate").val('');
+
+    });
+
+    var $Date2 = $('#CloseDate');
+
+    function datass2(){
+        document.getElementById("ChallanDate").setAttribute("max",$Date2.val());
+    }
+    $Date2.on("change select", function () {
+        datass2();
+        $("#ChallanDate").val('');
+    });
+</script>
+{% endblock script %}

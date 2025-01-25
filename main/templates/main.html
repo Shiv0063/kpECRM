@@ -1,0 +1,489 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KP Enterprises</title>
+  <link rel="icon" href="">
+  <!--Font awesome icons-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <!--Google web fonts-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap5.min.css">
+  <!--Simplebar css-->
+  <link rel="stylesheet" href="{% static 'assets/vendor/css/simplebar.min.css' %}">
+  <!--Choices css-->
+  <link rel="stylesheet" href="{% static 'assets/vendor/css/choices.min.css' %}">
+
+  <!--Date range picker-->
+  <link rel="stylesheet" href="{% static 'assets/vendor/css/daterangepicker.css' %}">
+
+  <!--Main style-->
+  <link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}" id="switchThemeStyle">
+
+  <!-- datatabel -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.dataTables.css">
+
+  <style>
+    .btn-default {
+      border: 1px solid #0057ff;
+      color: #0057ff;
+      margin-left: 10px;
+    }
+
+    .btn-default:hover {
+      background: #0057ff;
+      color: #fff;
+
+    }
+    .clr{
+      color: #669aff !important;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!--////////////////// PreLoader Start//////////////////////-->
+  <!-- <div class="loader">
+
+        <div class="d-flex flex-column flex-root">
+          <div class="page d-flex flex-row flex-column-fluid">
+            <aside class="page-sidebar placeholder-wave">
+              <div class="placeholder col-12 h-100 bg-gray"></div>
+            </aside>
+            <div class="page-content d-flex flex-column flex-row-fluid">
+              <div
+                class="content flex-column p-4 pb-0 d-flex justify-content-center align-items-center flex-column-fluid position-relative">
+                <div class="w-100 h-100 position-relative d-flex align-items-center justify-content-center">
+                  <div class="spinner-border me-3 text-primary" role="status">
+                  </div>
+                  <div>
+                  <span>Loading...</span>
+                </div>
+              </div>
+              </div>
+            </div>  
+          </div>
+        </div>
+      </div> -->
+  <!--////////////////// /.PreLoader END//////////////////////-->
+
+
+  <div class="d-flex flex-column flex-root">
+    <!--Page-->
+    <div class="page d-flex flex-row flex-column-fluid">
+      <!--///////////Page sidebar begin///////////////-->
+      <aside class="page-sidebar">
+        <div class="h-100 flex-column d-flex" data-simplebar>
+          <div class="aside-logo p-3 position-relative mt-1 row justify-content-center">
+            <a href="/" class="d-block pe-2 col-12">
+              <div class="d-flex align-items-center flex-no-wrap text-truncate">
+                <!--Sidebar-icon-->
+                <!-- <span class="sidebar-icon fs-5 lh-1 text-white rounded-circle bg-primary">
+                    <img src="{% static 'assets\media\logo\logo.png' %}" class="img-fluid" style="width: 100px;" alt="">
+                  </span> -->
+                <span class="sidebar-text">
+                  <!--Sidebar-text-->
+                  <!-- <img src="{% static 'assets\media\logo\Logo.png' %}" class="img-fluid "
+                    style="width: 130px; margin-left: 50px;" alt=""> -->
+                  <p class="sidebar-text text-truncate fs-4 text-uppercase fw-bolder mt-2" style="margin-right: 30px;">Giri <br> Associates</p>
+
+                </span>
+              </div>
+            </a>
+          </div>
+          <!--Aside-Menu-->
+          <div class="aside-menu pe-2 my-auto flex-column-fluid mt-4" >
+            <nav class="flex-grow-1 h-100" id="page-navbar">
+              <!--:Sidebar nav-->
+              <ul class="nav flex-column collapse-group collapse d-flex pt-4">
+                <li class="nav-item">
+                  <a href="/" class="nav-link d-flex align-items-center text-truncate" data-tabname="Dashboard">
+                    <span class="sidebar-icon">
+                      <i class="bi bi-speedometer2 fs-5"></i>
+                    </span>
+                    <span class="sidebar-text">Dashboard</span>
+                  </a>
+                </li>
+                <li class="nav-item ">
+                  <a href="#Master" data-bs-toggle="collapse" data-tabname="Master"
+                    class="nav-link d-flex align-items-center text-truncate" aria-expanded="false">
+                    <span class="sidebar-icon">
+                      <i class="bi bi-magic fs-5"></i>
+                    </span>
+                    <span class="sidebar-text">Master</span>
+                  </a>
+                  <ul data-bs-target="#Master" id="Master" data-tabname="Master2"
+                    class="sidebar-dropdown list-unstyled collapse ">
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="Party" href="/Party">Party</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="Cluster" href="/Cluster">Cluster</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="Rate" href="/RCCode">RC Code</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="GST" href="/GST">GST</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="CostCode" href="/CostCode">Cost Code </a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="Labour" href="/Labour">Labour</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="PartyName" href="/PartyName">Party Name</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="#Entry" data-bs-toggle="collapse" data-tabname="Entry" class="nav-link d-flex align-items-center text-truncate"
+                    aria-expanded="false">
+                    <span class="sidebar-icon">
+                      <i class="bi bi-dropbox fs-5"></i>
+                    </span>
+                    <span class="sidebar-text">Entry</span>
+                  </a>
+                  <ul data-bs-target="#Enetry" id="Entry" class="sidebar-dropdown list-unstyled collapse">
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="CallEntry" href="/CallEntry">Call Entry</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="PendingCall" href="/PendingCall">Pending Call</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="PendingWorkOrder" href="/PendingWorkOrder">Pending WorkOrder</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="CompleteCall" href="/CompleteCall">Complete Call</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="Invoice" href="/Invoice">Invoice</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="Quotation" href="/Quotation">Quotation</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="#Report" data-bs-toggle="collapse" data-tabname="Report" class="nav-link d-flex align-items-center text-truncate"
+                    aria-expanded="false">
+                    <span class="sidebar-icon">
+                      <i class="bi bi-clipboard-data fs-5"></i>
+                    </span>
+                    <span class="sidebar-text">Report</span>
+                  </a>
+                  <ul data-bs-target="#Report" id="Report" class="sidebar-dropdown list-unstyled collapse">
+                    <li class="sidebar-item"><a class="sidebar-link" data-tabname="ClusterReport" href="/ClusterReport">Cluster Report</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="Profile" class="nav-link d-flex align-items-center text-truncate " data-tabname="Profile">
+                    <span class="sidebar-icon">
+                      <i class="bi bi-person fs-5"></i>
+                    </span>
+                    <span class="sidebar-text">Profile</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </aside>
+      <!--///////////Page Sidebar End///////////////-->
+
+      <!--///Sidebar close button for 991px or below devices///-->
+      <div class="sidebar-close d-lg-none">
+        <a href="#"></a>
+      </div>
+      <!--///.Sidebar close end///-->
+
+
+
+      <!--///////////Page content wrapper///////////////-->
+      <main class="page-content d-flex flex-column flex-row-fluid">
+
+        <!--//page-header//-->
+        <header class="navbar py-0 page-header border-bottom navbar-expand navbar-light px-4">
+          <a href="/" class="navbar-brand d-block d-lg-none">
+            <div class="d-flex align-items-center flex-no-wrap text-truncate">
+              <!--Sidebar-icon-->
+              <span class=" ">
+                <!-- <img src="{% static 'assets\media\logo\Logo.png' %}" class="img-fluid " style="width: 80px;" alt=""> -->
+                <p class="sidebar-text text-truncate fs-4 text-uppercase fw-bolder mt-2" style="margin-right: 30px;">Giri <br> Associates</p>
+              </span>
+            </div>
+          </a>
+          <ul class="navbar-nav d-flex align-items-center h-100">
+            <li class="nav-item d-none d-lg-flex flex-column h-100 me-lg-2 align-items-center justify-content-center">
+              <a href="javascript:void(0)"
+                class="sidebar-trigger nav-link rounded-3 size-35 d-flex align-items-center justify-content-center p-0">
+                <i class="bi bi-arrow-bar-left fs-5"></i></a>
+            </li>
+            <li class="nav-item d-flex flex-column me-lg-2 h-100 justify-content-center dropdown">
+              <a href="javascript:void(0)" data-bs-toggle="dropdown"
+                class="d-flex align-items-center justify-content-center nav-link size-35 p-0 rounded-3"
+                data-bs-auto-close="outside" aria-expanded="false">
+                <i class="bi bi-search"></i>
+              </a>
+
+              <!--Search dropdown menu-->
+              <div class="dropdown-menu p-0 dropdown-menu-sm overflow-hidden mt-0">
+
+                <!--Search form-->
+                <form action="Search" method="post">
+                  {% csrf_token %}
+                  <div class="d-flex align-items-center p-1 border-bottom ps-4">
+                    <div class="text-body-tertiary">
+                      <i class="bi bi-search"></i>
+                    </div>
+                    <input type="text" name="sd" autofocus
+                      class="form-control bg-transparent rounded-0 py-3 ps-2 border-0 shadow-none"
+                      placeholder="Search everything...">
+                  </div>
+                </form>
+                <!--Recently searched-->
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto d-flex align-items-center h-100">
+            <li class="nav-item dropdown d-flex align-items-center justify-content-center flex-column h-100 me-2">
+              <button
+                class="bg-transparent border-0 nav-link p-0 size-35 fs-5 d-flex align-items-center justify-content-center"
+                id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+                <span class="bi my-1 theme-icon-active">
+                  <i class="bi bi-sun"></i>
+                </span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme"
+                style="--bs-dropdown-min-width: 8rem;">
+                <li class="mb-1">
+                  <button type="button" class="dropdown-item d-flex align-items-center active"
+                    data-bs-theme-value="light">
+                    <span class="bi me-2 theme-icon">
+                      <i class="bi bi-sun"></i>
+                      </svg>
+                    </span>
+                    Light
+
+                  </button>
+                </li>
+                <li class="mb-1">
+                  <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+                    <span class="bi me-2 theme-icon">
+                      <i class="bi bi-moon"></i>
+                    </span>
+                    Dark
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
+                    <span class="bi me-2 theme-icon"><i class="bi bi-circle-half"></i></span>
+                    Auto
+
+                  </button>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown d-flex align-items-center justify-content-center flex-column h-100">
+              <a href="#"
+                class="nav-link rounded-pill p-1 lh-1 pe-1 pe-md-2 d-flex align-items-center justify-content-center"
+                aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                <div class="d-flex align-items-center">
+
+                  <!--Avatar with status-->
+                  <div class="avatar-status status-online me-1 avatar sm">
+                    <img src="{% static 'assets/media/avatars/01.jpg' %}" class="rounded-circle img-fluid" alt="">
+                  </div>
+                </div>
+              </a>
+
+              <div class="dropdown-menu mt-0 p-0 dropdown-menu-end overflow-hidden">
+                <!--User meta-->
+                <div class="position-relative overflow-hidden p-4 bg-primary-subtle">
+                  <div class="position-relative">
+                    <h5 class="mb-1">Admin</h5>
+                    <p class="text-body-tertiary small mb-0 lh-1">user</p>
+                  </div>
+                </div>
+                <div class="p-2">
+                  <hr class="mt-3 mb-1">
+                  <a href="/logout" class="dropdown-item d-flex align-items-center">
+                    <i class="bi bi-box-arrow-in-right opacity-75 fs-5 align-middle me-2"></i>
+                    Sign out
+                  </a>
+                </div>
+              </div>
+            </li>
+            <li
+              class="nav-item dropdown ms-1 ms-lg-3 d-flex d-lg-none align-items-center justify-content-center flex-column h-100">
+              <a href="#"
+                class="nav-link sidebar-trigger-lg-down size-35 p-0 fs-4 d-flex align-items-center justify-content-center rounded-3">
+                <i class="bi bi-list"></i>
+              </a>
+            </li>
+          </ul>
+        </header>
+        {% block content %}
+
+        {% endblock content %}
+        <!--//Page-footer//-->
+        <footer class="pb-4">
+          <div class="container-fluid px-4">
+            <span class="d-block lh-sm small text-muted text-end">&copy;
+              <script>
+                document.write(new Date().getFullYear())
+              </script>. Copyright <br>
+              <span><a class="text-primary"></a></span>
+            </span>
+          </div>
+        </footer>
+        <!--/.Page Footer End-->
+
+      </main>
+      <!--///////////Page content wrapper End///////////////-->
+    </div>
+  </div>
+
+
+
+  <!--////////////Theme Core scripts Start/////////////////-->
+  <script src="{% static 'assets/js/jquery-3.7.1.js' %}"></script>
+  <script src="{% static 'assets/js/theme.bundle.js' %}"></script>
+  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!--////////////Theme Core scripts End/////////////////-->
+
+  {% block script %}
+
+  {% endblock script %}
+  <!--Datatables-->
+
+  <script>
+
+    let PathNameObj = {
+      "": 'Dashboard',
+      "CallEntry": 'Entry',
+      "AddCallEntry": 'Entry',
+      "PendingCall": 'Entry',
+      "PendingWorkOrder": 'Entry',
+      "CompleteCall": 'Entry',
+      "Quotation": 'Entry',
+      "Invoice": 'Entry',
+      "AddInvoice": 'Entry',
+      "Party": 'Master',
+      "AddParty": 'Master',
+      "EditParty": 'Master',
+      "Cluster": 'Master',
+      "EditCluster": 'Master',
+      "RCCode": 'Master',
+      "AddRate": 'Master',
+      "EditRate": 'Master',
+      "GST": 'Master',
+      "EditGST": 'Master',
+      "Labour": 'Master',
+      "AddLabour": 'Master',
+      "EditLabour": 'Master',
+      "CostCode": 'Master',
+      "EditCostCode": 'Master',
+      "PartyName": 'Master',
+      "EditPartyName": 'Master',
+      "ClusterReport": 'Report',
+      "Profile": 'Profile',
+
+    }
+
+    let patName;
+    if (PathNameObj[location.pathname.split("/")[1]]) {
+      patName = PathNameObj[location.pathname.split("/")[1]]
+    } else {
+      patName = location.pathname.slice(1)
+    }
+    document.querySelector(`[data-tabname='${patName}']`)?.classList.add("active")
+
+    let PathNameObj2 = {
+      "CallEntry": 'CallEntry',
+      "PendingCall": 'PendingCall',
+      "PendingWorkOrder": 'PendingWorkOrder',
+      "AddCallEntry": 'CallEntry',
+      "Invoice": 'Invoice',
+      "AddInvoice": 'Invoice',
+      "Party": 'Party',
+      "AddParty": 'Party',
+      "EditParty": 'Party',
+      "Cluster": 'Cluster',
+      "EditCluster": 'Cluster',
+      "RCCode": 'Rate',
+      "AddRate": 'Rate',
+      "EditRate": 'Rate',
+      "GST": 'GST',
+      "EditGST": 'GST',
+      "Labour": 'Labour',
+      "AddLabour": 'Labour',
+      "EditLabour": 'Labour',
+      "CostCode": 'CostCode',
+      "EditCostCode": 'CostCode',
+      "PartyName": 'PartyName',
+      "EditPartyName": 'PartyName',
+      "Profile": 'Profile2',
+
+    }
+
+    let patName2;
+    if (PathNameObj2[location.pathname.split("/")[1]]) {
+      patName2 = PathNameObj2[location.pathname.split("/")[1]]
+    } else {
+      patName2 = location.pathname.slice(1)
+    }
+    document.querySelector(`[data-tabname='${patName2}']`)?.classList.add("clr")
+  </script>
+
+  
+
+  <!--Charts-->
+  <script src="{% static 'assets/vendor/apexcharts.min.js' %}"></script>
+  <!--Dashboard duration calendar-->
+  <script src="{% static 'assets/vendor/moment.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/daterangepicker.js' %}"></script>
+
+  <!--Datatables-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.dataTables.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Datatables Responsive
+      $("#exampletab ").DataTable({
+        "filter": true,
+        "length": false,
+        'lengthChange': true,
+        'responsive': true,
+        "buttons": ['copy']
+      });
+    });
+  </script>
+
+
+
+  <script>
+    $(function () {
+      var start = moment().subtract(29, 'days');
+      var end = moment();
+      function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      }
+      $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+      }, cb);
+
+      cb(start, end);
+
+    });
+  </script>
+</body>
+
+</html>

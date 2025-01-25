@@ -1,0 +1,458 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-4 mb-lg-0">
+                <h3 class="mb-2">Add Quotation</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">Quotation</li>
+                        <li class="breadcrumb-item active">Add Quotation</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a href="/Quotation" class="btn btn-outline-success mb-2 me-2">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Add Quotation</h5>
+                        <p class="test-end">Financial Year : 2023-2024</p>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3" method="post" id="formAdd">
+                            {% csrf_token %}
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Quotation No</label>
+                                <input type="text" name="QuotationNo" class="form-control" value="{{QuotationNo}}"
+                                    readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Date</label>
+                                <input type="date" name="Date" class="form-control" id="Date">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">Party Name</label>
+                                <input type="hidden" name="Counter" value="{{CM.QuotationNo}}">
+                                <select id="Party" name="PartyName" class="form-select">
+                                    <option selected>--Select--</option>
+                                    {% for i in PN %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">City</label>
+                                <select id="City" name="City" class="form-select">
+                                    <option class="after" value="">--Select--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">Branch</label>
+                                <select id="selectType" name="Branch" class="form-select">
+                                    <option class="after2" value="">--Select--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Code</label>
+                                <input type="text" name="Code" class="form-control" id="Code" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputAddress" class="form-label">Address</label>
+                                <textarea class="form-control" id="Address" name="Address" rows="3" readonly></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputProblem" class="form-label">Problem</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" name="Problem"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Call Ref.:</label>
+                                <input type="text" name="CallRef" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Call No.</label>
+                                <input type="text" name="CallNo" class="form-control" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">Work Engaged</label>
+                                <select id="WorkEngagedid" class="form-select" onchange="Others()" name="WorkEngaged">
+                                    <option selected value="">Choose...</option>
+                                    <option value="Carpenter">Carpenter</option>
+                                    <option value="Electrician">Electrician</option>
+                                    <option value="Plumber">Plumber</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12" id="OthersID" style="display: none;">
+                                <label for="inputCity" class="form-label">Work Engaged Other</label>
+                                <input type="text" class="form-control" name="Other" id="">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputEmail4" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="inputCity" name="Subject">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputEmail4" class="form-label">Area Of Work</label>
+                                <input type="text" class="form-control" id="inputCity" name="AreaOfWork">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label"><b>Tax</b></label>
+                                <select class="form-select" name="Type">
+                                    <option value="GST" selected>GST</option>
+                                    <option value="IGST">IGST</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputEmail4" class="form-label">Branch Representative Name</label>
+                                <input type="text" class="form-control" id="inputCity" name="BRName" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputEmail4" class="form-label">Email ID</label>
+                                <input type="email" class="form-control" id="inputCity" name="EmailID" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputEmail4" class="form-label">MOBILE NO</label>
+                                <input type="text" class="form-control" id="inputCity" name="MOBILENO" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputEmail4" class="form-label">ASD No</label>
+                                <input type="text" class="form-control" id="inputCity" name="ASDNo" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">ASD Date</label>
+                                <input type="date" name="ASDDate" class="form-control" id="ASDDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputAddress" class="form-label">Remark</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" name="Remark"
+                                    rows="3"></textarea>
+                                <input type="hidden" name="TotalAmount" id="TotalAmount" value="{{TAmount}}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputAddress" class="form-label">T. & C.</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" name="TC"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <p class="text-danger">Total Amount : <samp id="tamount">{{TAmount}}</samp>.00</p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="col-5 btn btn-success m-1">Save</button>
+                                    <a class="col-5 btn btn-warning m-1"
+                                        href="/ClaseQuotation/{{CM.QuotationNo}}">Clase</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="border border-1 rounded row p-2 m-0 mt-3 mb-2">
+                    <div class="col-md-12">
+                        <form class="row justify-content-center" method="post" id="post-form">
+                            {% csrf_token %}
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12" id="RCcodeF">
+                                        <div id="RC">
+                                            <label for="" class="form-label">RC Code</label>
+                                            <select class="form-select" name="RCCode" id="RCCode" required>
+                                                <option>--Select--</option>
+                                                {% for i in RC %}
+                                                <option value="{{i.CodeNo}}">{{i.CodeNo}} -- {{i.Description}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="sid" id="sid">
+                                        <input type="hidden" id="Counter" value="{{CM.QuotationNo}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <label for="inputAddress" class="form-label">Description</label>
+                                    <textarea class="form-control" id="RCDescription" rows="1"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="inputCity" class="form-label">Quantity</label>
+                                        <input type="text" class="form-control" id="Quantity" placeholder="0"
+                                            required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="inputCity" class="form-label">Rate</label>
+                                        <input type="text" class="form-control" id="Rate" placeholder="0" required>
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <label for="inputCity" class="form-label">Labour</label>
+                                        <input type="text" class="form-control" id="Labour" value="0" placeholder="0">
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <label for="inputCity" class="form-label">Amount</label>
+                                        <input type="text" class="form-control" id="Amount" placeholder="0" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-2">
+                                <button type="submit" class="col-6 mt-2 btn btn-success">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card mt-4" id=''>
+                            <div class="table-responsive p-2">
+                                <table id="" class="table">
+                                    <thead class="text-uppercase small text-muted">
+                                        <tr>
+                                            <th>RC Code</th>
+                                            <th>Quantity</th>
+                                            <th>Rate</th>
+                                            <th>Labour</th>
+                                            <th>Amount</th>
+                                            <th>RC Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        {% for i in RCM %}
+                                        {% if i.Counter == CM.QuotationNo %}
+                                        <tr>
+                                            <td>{{i.RCCode}}</td>
+                                            <td>{{i.Quantity}}</td>
+                                            <td>{{i.Rate}}</td>
+                                            <td>{{i.Labour}}</td>
+                                            <td>{{i.Amount}}</td>
+                                            <td>{{i.RCDescription}}</td>
+                                            <td>
+                                                <a type="button" class="btn btn-success btn-edit btn-sm ms-2"
+                                                    data-sid="{{i.id}}"><i class="bi bi-pen fs-5"></i></a>
+                                                <a type="button" class="btn btn-danger btn-del btn-sm ms-2"
+                                                    data-sid="{{i.id}}"><i class="bi bi-trash fs-5"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total Amount: </th>
+                                            <th><span id="tamount2">{{TAmount}}</span></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+
+{% endblock content %}
+
+{% block script %}
+{% include 'qajex.html' %}
+<script>
+    DF = new Date()
+    document.getElementById("Date").value = DF.toJSON().slice(0, 10);
+    $("#formAdd select[name='PartyName']").on('change', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            $("#formAdd select[name='City']").find('.after').nextAll().remove();
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+            $('#Code').val('');
+            $('#Cluster').val('');
+            $('#Address').val('');
+            $.ajax({
+                url: '/Citys',
+                type: 'POST',
+                data: { value: $this.val() },
+                success: function (resp) {
+                    let options = '';
+                    resp.City.forEach(City => {
+                        options += '<option value=' + City + '>' + City + '</option>';
+                    });
+                    $("#formAdd select[name='City']").find('.after').after(options);
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            $("#formAdd ").find('.after').nextAll().remove();
+        }
+    });
+    $("#formAdd select[name='City']").on('change', function () {
+        var $this = $(this);
+        PN = $('#Party').val();
+        if ($this.val() != '') {
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+            $.ajax({
+                url: '/Branch',
+                type: 'POST',
+                data: { value: PN,City: $this.val() },
+                success: function (resp) {
+                    let options = '';
+                    resp.Branch.forEach(City => {
+                        City2 = City.replace(" ", "%20");
+                        City2 = City2.replace(" ", "%20");
+                        options += '<option value=' + City2 + '>' + City + '</option>';
+                    });
+                    $("#formAdd select[name='Branch']").find('.after2').after(options);
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+        }
+    });
+    $("#formAdd select[name='Branch']").on('change', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            var $Party = $('#Party');
+            var $City = $('#City');
+            $.ajax({
+                url: '/PartyData',
+                type: 'POST',
+                data: { Party: $Party.val(), City: $City.val(), Branch: $this.val() },
+                success: function (resp) {
+                    $('#Code').val(resp.RC);
+                    $('#Address').val(resp.AD);
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            $("#formAdd select[name='Branch']").find('.after2').nextAll().remove();
+        }
+    });
+    var $Quantity = $('#Quantity');
+    var $Rate = $('#Rate');
+    var $Labour = $('#Labour');
+    var $Amount = $('#Amount');
+
+    function calcVal() {
+        var num1 = $Quantity.val();
+        var num2 = $Rate.val();
+        var num3 = $Labour.val();
+        if (num3 == '') {
+            num3 = 0;
+        }
+        if (num1 == '') {
+            num1 = 0;
+        }
+        var total_amount = Number(num1) * Number(num2) + Number(num3);
+        if (!isNaN(total_amount)) {
+            $Amount.val(total_amount.toFixed(2));
+        }
+    }
+    $Quantity.on("keydown keyup", function () {
+        calcVal();
+    });
+    $Rate.on("keydown keyup", function () {
+        calcVal();
+    });
+    $Labour.on("keydown keyup", function () {
+        calcVal();
+    });
+    $("#RCcodeF select[name='RCCode']").on('change', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            RC = $this.val();
+            mydata = { RC: RC };
+            $.ajax({
+                type: "POST",
+                url: '/RCCODE',
+                data: mydata,
+                success: function (resp) {
+                    RCV = $('#Rate');
+                    RCV.val(resp.RC);
+                    RCV2 = $('#RCDescription');
+                    RCV2.val(resp.RCDescription);
+
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        } else {
+            console.log('Something went wrong');
+        }
+    });
+    // var $NRCCode = $('#NRCCode');
+    // function NonRC(){
+    //     var $this = $("#NRCCode");
+    //     if ($this.val() != '') {
+    //         RC = $this.val();
+    //         mydata = { RC: RC };
+    //         $.ajax({
+    //             type: "POST",
+    //             url: '/RCCODE',
+    //             data: mydata,
+    //             success: function (resp) {
+    //                 RCV = $('#Rate');
+    //                 RCV.val(resp.RC);
+    //             },
+    //             error: function (resp) {
+    //                 console.log('Something went wrong');
+    //             }
+    //         });
+    //     } else {
+    //         console.log('Something went wrong');
+    //     }
+    // }
+    // $NRCCode.on("keydown keyup", function () {
+    //     NonRC();
+    // });
+    var $WorkEngagedid = $('#WorkEngagedid');
+    function Others() {
+        var num1 = $WorkEngagedid.val();
+        if (num1 == "Others") {
+            let get = document.getElementById('OthersID');
+            get.style.display = "block";
+        }
+        else {
+            let get = document.getElementById('OthersID');
+            get.style.display = "none";
+        }
+
+    }
+</script>
+{% endblock script %}

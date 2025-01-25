@@ -1,0 +1,90 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-4 mb-lg-0">
+                <h3 class="mb-2">Party Details</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Party Details</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a type="button" href="/AddParty" class="btn btn-outline-success mb-2 me-2" >Add Party</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" id=''>
+                    <div class="table-responsive p-2">
+                        <table id="exampletab" class="table mt-0 table-striped table-card table-nowrap display nowrap" style="width:100%">
+                            <thead class="text-uppercase small text-muted">
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Cluster</th>
+                                    <th>Party Name</th>
+                                    <th>City</th>
+                                    <th>Branch</th>
+                                    <th>Address</th>
+                                    <th>GST No.</th>
+                                    <th>No 1</th>
+                                    <th>No 2</th>
+                                    <th>No 3</th>
+                                    <th>No 4</th>
+                                    <th>No 5</th>
+                                    <th>No 6</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in data %}
+                                <tr>
+                                    <td>{{i.Code}}</td>
+                                    <td>{{i.Cluster}}</td>
+                                    <td>{{i.PartyName}}</td>
+                                    <td>{{i.City}}</td>
+                                    <td>{{i.Branch}}</td>
+                                    <td>{{i.Address}}</td>
+                                    <td>{{i.GSTNo}}</td>
+                                    <td>{{i.NO1}}</td>
+                                    <td>{{i.NO2}}</td>
+                                    <td>{{i.NO3}}</td>
+                                    <td>{{i.NO4}}</td>
+                                    <td>{{i.NO5}}</td>
+                                    <td>{{i.NO6}}</td>
+                                    <td><a class="btn btn-success mr-3" href="/EditParty/{{i.id}}"><i class="bi bi-pen"></i></a><a href="DeleteParty/{{i.id}}" style="margin-left: 5px;" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+    </div>
+</div>
+{% endblock content %}
+
+

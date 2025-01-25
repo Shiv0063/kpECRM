@@ -1,0 +1,128 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-4 mb-lg-0">
+                <h3 class="mb-2">Profle</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">Profle</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a href="/" class="btn btn-outline-success mb-2 me-2">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row justify-content-start">
+            <div class="col-12 mb-2">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Profile Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3" method="post">
+                            {% csrf_token %}
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>Company Name</b></label>
+                                <input type="text" class="form-control" name="CompanyName" value="{{dt.CompanyName}}">
+                                <input type="hidden" class="form-control" name="Username" value="{{dt.UserName}}"> 
+
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>Phone No.</b></label>
+                                <input type="text" class="form-control" name="PhoneNo" value="{{dt.PhoneNo}}" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>GST No.</b></label>
+                                <input type="text" class="form-control" name="GSTNo" value="{{dt.GSTNo}}" required>
+                            </div>      
+                            <div class="col-md-3 mb-2">
+                                <label for="" class="form-label"><b>Pan No.</b></label>
+                                <input type="text" class="form-control" name="PanNo" value="{{dt.PanNo}}">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label for="" class="form-label"><b>Email</b></label>
+                                <input type="text" class="form-control" name="Email" value="{{dt.Email}}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>Address</b></label>
+                                <textarea class="form-control" rows="2" name="Address"  required >{{dt.Address}}</textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="col-md-3 btn btn-success m-1">Save</button>
+                                    <button type="button" class="col-md-3 btn btn-primary m-1 " data-bs-toggle="modal"
+                                    data-bs-target="#examplescrolling">Change Password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+<!--//Page content//-->
+<div class="content p-4 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12 col-md-6 mb-4">
+                <div class=" overflow-hidden">
+                    <div class="card-body">
+                        <div class="modal fade" id="examplescrolling" tabindex="-1"
+                            aria-labelledby="examplescrollingLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="examplescrollingLabel">Change Password</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" class="p-3" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="row mb-4 justify-content-center">
+                                            <div class="col-md-11 ">
+                                                <label for="" class="form-label"><b>New Password</b></label>
+                                                <input type="text" class="form-control" name="NewPassword" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" formaction="/PWChange">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//Page content End//-->
+
+{% endblock content %}

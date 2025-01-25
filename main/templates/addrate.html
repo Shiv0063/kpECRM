@@ -1,0 +1,132 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-1 mb-lg-0">
+                <h3 class="mb-2">Add RC Code</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">RC Code</li>
+                        <li class="breadcrumb-item active">Add RC Code</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a href="/RCCode" class="btn btn-outline-success mb-2 me-2">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row justify-content-start">
+            <div class="col-md-12 col-12 mb-1">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Add RC Code</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3" method="post" id="formAdd">
+                            {% csrf_token %}
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Type</label>
+                                <select class="form-select" name="TYPES" id="" required>
+                                    <option value="RC" id="RCCodeSLT">RC Code</option>
+                                    <option value="NonRC" id="NonRCCodeSLT">Non RC Code</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label"><b>RC Code No</b></label>
+                                <input type="text" class="form-control" name="CodeNo" id="CodeNo" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label"><b>HSN Code</b></label>
+                                <input type="number" class="form-control" name="HSNCode" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label"><b>Unit</b></label>
+                                <input type="text" class="form-control" name="Unit" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label"><b>Rate</b></label>
+                                <input type="text" class="form-control" name="Rate" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label"><b>GST</b></label>
+                                <select id="" class="form-select" name="GSTName" required>
+                                    <option selected>Choose...</option>
+                                    {% for i in data %}
+                                    <option value="{{i.GSTName}}">{{i.GSTName}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="form-label"><b>Description</b></label>
+                                <textarea class="form-control" id="" rows="2" name="Description" required></textarea>
+                            </div>
+                           
+                            <div class="col-md-6">
+                                <label for="" class="form-label"><b>Remarks</b></label>
+                                <textarea class="form-control" id="" rows="2" name="Remarks"></textarea>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="col-5 btn btn-success m-1">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+
+{% endblock content %}
+{% block script %}
+{% include 'ajex.html' %}
+<script>
+    $("#formAdd input[name='CodeNo']").on('keydown keyup', function () {
+    var $this = $(this);
+    if ($this.val() != '') {
+        $.ajax({
+            url: '/CodeNoC',
+            type: 'POST',
+            data: { CN: $this.val() },
+            success: function (resp) {
+                let v = document.getElementById("CodeNo");
+                v.className = "";
+                if (resp.RC == 1) {
+                    v.className = "form-control border border-2 border-danger";
+                }
+                else {
+                    v.className = "form-control border border-2 border-success";
+                }
+            },
+            error: function (resp) {
+                console.log('Something went wrong');
+            }
+        });
+    }
+});
+</script>
+{% endblock script %}

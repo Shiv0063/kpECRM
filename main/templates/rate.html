@@ -1,0 +1,87 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-1 mb-lg-0">
+                <h3 class="mb-2">RC Code Details</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">RC Code Details</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a type="button" class="btn btn-outline-success mb-2 me-2" href="/AddRate">Add RC Code</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" id=''>
+                    <div class="table-responsive p-2">
+                        <table id="exampletab" class="table mt-0 table-striped table-card table-nowrap">
+                            <thead class="text-uppercase small text-muted">
+                                <tr>
+                                    <th>No</th>
+                                    <th>RC Code</th>
+                                    <th>Description</th>
+                                    <th>HSN Code</th>
+                                    <th>Unit</th>
+                                    <th>Rate</th>
+                                    <th>Remarks</th>
+                                    <th>GST Name</th>
+                                    <th>SGST</th>
+                                    <th>CGST</th>
+                                    <th>IGST Name</th>
+                                    <th>IGST</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in data %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.CodeNo}}</td>
+                                    <td>{{i.Description}}</td>
+                                    <td>{{i.HSNCode}}</td>
+                                    <td>{{i.Unit}}</td>
+                                    <td>{{i.Rate}}</td>
+                                    <td>{{i.Remarks}}</td>
+                                    <td>{{i.GSTName}}</td>
+                                    <td>{{i.SGST}}.00</td>
+                                    <td>{{i.CGST}}.00</td>
+                                    <td>{{i.IGSTName}}</td>
+                                    <td>{{i.IGST}}.00</td>
+                                    <td><a class="btn btn-success mr-3" href="/EditRate/{{i.id}}"><i class="bi bi-pen"></i></a><a href="DeleteRate/{{i.id}}" style="margin-left: 5px;" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+{% endblock content %}

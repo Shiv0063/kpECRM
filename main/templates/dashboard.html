@@ -1,0 +1,112 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 pb-0">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 mb-3 mb-lg-0">
+                <h3 class="mb-2">Welcome back...! 👋</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//Page Toolbar End//-->
+
+<!--//Page content//-->
+<div class="content p-4 pb-0 d-flex flex-column-fluid position-relative">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12 col-xl-3 col-sm-6 mb-4">
+                <!-- Card-->
+                <div class="card overflow-hidden">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div
+                            class="flex-shrink-0 size-60 rounded  text-primary me-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-box fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 text-start">
+                            <h5 class="fs-4 d-block mb-1">
+                                {{PC}}
+                            </h5>
+                            <p class="mb-0 text-muted">Pending Call</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-3 col-sm-6 mb-4">
+                <div class="card overflow-hidden">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div
+                            class="flex-shrink-0 size-60 rounded text-info me-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-layers fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 text-start">
+                            <h5 class="fs-4 d-block mb-1">
+                                {{PW}}
+                            </h5>
+                            <p class="mb-0 text-muted">Pending WorkOrder</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-3 col-sm-6 mb-4">
+                <!-- Card-->
+                <div class="card overflow-hidden">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div
+                            class="flex-shrink-0 size-60 rounded  text-primary me-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-people fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 text-start">
+                            <h5 class="fs-4 d-block mb-1">
+                                {{CC}}
+                            </h5>
+                            <p class="mb-0 text-muted">Complete Call</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-3 col-sm-6 mb-4">
+                <!-- Card-->
+                <div class="card overflow-hidden">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div
+                            class="flex-shrink-0 size-60 rounded  text-success me-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-pin-map-fill fs-3"></i>
+                        </div>
+                        <div class="flex-grow-1 text-start">
+                            <h5 class="fs-4 d-block mb-1">
+                                {{Invoice}}
+                            </h5>
+                            <p class="mb-0 text-muted">Invoice</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <div class="row justify-content-center">
+        <div class="col-6 mt-3 alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>
+<!--//Page content End//-->
+
+
+{% endblock content %}
+ 

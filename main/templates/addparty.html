@@ -1,0 +1,159 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-4 mb-lg-0">
+                <h3 class="mb-2">Add Party</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">Party</li>
+                        <li class="breadcrumb-item active">Add Party</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a href="/Party" class="btn btn-outline-success mb-2 me-2">Back</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 pt-0 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row justify-content-start">
+            <div class="col-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Add Party</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3" method="post" id="formAdd">
+                            {% csrf_token %}
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>Location Code</b></label>
+                                <input type="text" class="form-control" name="Code" id="Code" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>Party Name</b></label>
+                                <select id="inputState" class="form-select" name="PartyName" required>
+                                    <option selected>Choose...</option>
+                                    {% for i in PN %}
+                                    <option value="{{i.Name}}">{{i.Name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>Cluster</b></label>
+                                <select id="inputState" class="form-select" name="Cluster" required>
+                                    <option selected>Choose...</option>
+                                    {% for i in data %}
+                                    <option value="{{i.id}}">{{i.Name}}-{{i.Type}}--{{i.Amount}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>City</b></label>
+                                <select id="inputState" class="form-select" name="City" required>
+                                    <option selected>Choose...</option>
+                                    {% include "city.html" %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>Branch</b></label>
+                                <input type="text" class="form-control" name="Branch" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="form-label"><b>GST No.</b></label>
+                                <input type="text" class="form-control" name="GSTNo" required>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="" class="form-label"><b>No 1</b></label>
+                                <input type="text" class="form-control" name="NO1">
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="" class="form-label"><b>No 2</b></label>
+
+                                <input type="text" class="form-control" name="NO2">
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="" class="form-label"><b>No 3</b></label>
+
+                                <input type="text" class="form-control" name="NO3">
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="" class="form-label"><b>No 4</b></label>
+
+                                <input type="text" class="form-control" name="NO4">
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="" class="form-label"><b>No 5</b></label>
+
+                                <input type="text" class="form-control" name="NO5">
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="" class="form-label"><b>No 6</b></label>
+
+                                <input type="text" class="form-control" name="NO6">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label"><b>Address</b></label>
+                                <textarea class="form-control" rows="2" name="Address" required></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="col-5 btn btn-success m-1">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    $("#formAdd input[name='Code']").on('keydown keyup', function () {
+        var $this = $(this);
+        if ($this.val() != '') {
+            $.ajax({
+                url: '/LocationCode',
+                type: 'POST',
+                data: { CN: $this.val() },
+                success: function (resp) {
+                    let v = document.getElementById("Code");
+                    v.className = "";
+                    if (resp.Code == 1) {
+                        v.className = "form-control border border-2 border-danger";
+                    }
+                    else {
+                        v.className = "form-control border border-2 border-success";
+                    }
+                },
+                error: function (resp) {
+                    console.log('Something went wrong');
+                }
+            });
+        }
+    });
+</script>
+{% endblock script %}

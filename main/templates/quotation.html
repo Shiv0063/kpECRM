@@ -1,0 +1,105 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!--//Page Toolbar//-->
+<div class="toolbar p-4 bg-body">
+    <div class="position-relative container-fluid px-0">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-5 col-9 mb-1 mb-lg-0">
+                <h3 class="mb-2">Quotation Details</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">Quotation Details</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-7 col-3 text-md-end">
+                <div class="d-flex justify-content-md-end align-items-center">
+                    <a type="button" class="btn btn-outline-success mb-2 me-2" href="/AddQuotation">Add Quotation</a>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <center>
+                    <h3 class="text-success">{{message}}</h3>
+                </center>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content p-4 d-flex flex-column-fluid">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="card" id=''>
+                    <div class="table-responsive p-2">
+                        <table id="exampletab" class="table mt-0 table-striped table-card table-nowrap">
+                            <thead class="text-uppercase small text-muted">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Quotation No</th>
+                                    <th>Date</th>
+                                    <th>PartyName</th>
+                                    <th>City</th>
+                                    <th>Branch</th>
+                                    <th>Address</th>
+                                    <th>Problem</th>
+                                    <th>Code</th>
+                                    <th>Call Ref.</th>
+                                    <th>Call No</th>
+                                    <th>Work Engaged</th>
+                                    <th>Work Engaged Other</th>
+                                    <th>Subject</th>
+                                    <th>Area Of Work</th>
+                                    <th>Remark</th>
+                                    <th>T. & C.</th>
+                                    <th>Amount</th>
+                                    <th>GST Amount</th>
+                                    <th>Total Amount</th>
+                                    <th></th>
+                                    <th>Print</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in data %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.QuotationNo}}</td>
+                                    <td>{{i.ndate}}</td>
+                                    <td>{{i.PartyName}}</td>
+                                    <td>{{i.City}}</td>
+                                    <td>{{i.Branch}}</td>
+                                    <td>{{i.Address}}</td>
+                                    <td>{{i.Problem}}</td>
+                                    <td>{{i.Code}}</td>
+                                    <td>{{i.CallRef}}</td>
+                                    <td>{{i.CallNo}}</td>
+                                    <td>{{i.WorkEngaged}}</td>
+                                    <td>{{i.Other}}</td>
+                                    <td>{{i.Subject}}</td>
+                                    <td>{{i.AreaOfWork}}</td>
+                                    <td>{{i.Remark}}</td>
+                                    <td>{{i.TC}}</td>
+                                    <td>{{i.Amount}}</td>
+                                    <td>{{i.GSTAmount}}</td>
+                                    <td>{{i.TotalAmount}}</td>
+                                    <td><a class="btn btn-success mr-3" href="EditQuotation/{{i.id}}"><i class="bi bi-pen"></i></a><a href="DeleteQuotation/{{i.id}}" style="margin-left: 5px;" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+                                    <td><a class="btn btn-primary mr-3" href="QuotationP/{{i.id}}"><i class="bi bi-printer"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//Page content End//-->
+
+{% endblock content %}
