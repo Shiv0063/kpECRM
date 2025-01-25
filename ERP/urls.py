@@ -71,6 +71,7 @@ urlpatterns = [
     path('ChallanNoC',views.ChallanNoC,name='ChallanNoC'),
     path('CodeNoC',views.CodeNoC,name='CodeNoC'),
     path('Profile',views.Profile,name='Profile'),
+    path('ProfileMKV',views.ProfileMKV,name='ProfileMKV'),
     path('PWChange',views.PWChange,name='PWChange'),
     path('InvoiceDelete/<int:id>',views.InvoiceDelete,name='InvoiceDelete'),
     path('login',views.Login,name='Login'),

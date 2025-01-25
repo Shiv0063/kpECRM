@@ -1357,22 +1357,22 @@ def InvoiceDelete(request,id):
     InvoiceModel.objects.get(id=id).delete()
     return redirect('/Invoice')
 
-# @login_required(login_url='Login')
-# def Profile(request):
-#     dt=ProfileModel.objects.all()
-#     if request.method=="POST":    
-#         Username=request.POST.get('Username')
-#         CompanyName=request.POST.get('CompanyName')
-#         PhoneNo = request.POST.get('PhoneNo')
-#         GSTNo = request.POST.get('GSTNo')
-#         PanNo = request.POST.get('PanNo')
-#         Email = request.POST.get('Email')
-#         Address = request.POST.get('Address')
-#         dt=ProfileModel(UserName=Username,CompanyName=CompanyName,PhoneNo=PhoneNo,GSTNo=GSTNo,PanNo=PanNo,Email=Email,Address=Address)
-#         dt.save()
-#     return render(request,'profile.html')
+@login_required(login_url='Login')
+def ProfileMKV(request):
+    dt=ProfileModel.objects.all()
+    if request.method=="POST":    
+        Username=request.POST.get('Username')
+        CompanyName=request.POST.get('CompanyName')
+        PhoneNo = request.POST.get('PhoneNo')
+        GSTNo = request.POST.get('GSTNo')
+        PanNo = request.POST.get('PanNo')
+        Email = request.POST.get('Email')
+        Address = request.POST.get('Address')
+        dt=ProfileModel(UserName=Username,CompanyName=CompanyName,PhoneNo=PhoneNo,GSTNo=GSTNo,PanNo=PanNo,Email=Email,Address=Address)
+        dt.save()
+    return render(request,'profile.html')
 
-# @login_required(login_url='Login')
+@login_required(login_url='Login')
 def Profile(request):
     dt=ProfileModel.objects.get(id=1)
     uf=User.objects.get(username=request.user)
